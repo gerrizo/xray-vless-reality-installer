@@ -55,7 +55,7 @@ def configure_xray():
     key_output = run_command(["xray", "x25519"])
 
     private_key = re.search(r"PrivateKey:\s*(\S+)", key_output).group(1)
-    public_key = re.search(r"PublicKey:\s*(\S+)", key_output).group(1)
+    public_key = re.search(r"(?:PublicKey|Password \(PublicKey\)):\s*(\S+)", key_output).group(1)
 
     short_id = "".join(random.choice("0123456789abcdef") for _ in range(8))
     dest = random.choice(servers)
