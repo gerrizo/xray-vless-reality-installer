@@ -43,7 +43,7 @@ Requirements:
 
 ### One-line Install
 ```bash
-curl -O https://raw.githubusercontent.com/gerrizo/xray-installer/main/install.py && sudo python3 install.py
+curl -O https://raw.githubusercontent.com/gerrizo/xray-vless-reality-installer/main/install.py && sudo python3 install.py
 ```
 ---
 
