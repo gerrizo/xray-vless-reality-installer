@@ -14,8 +14,8 @@ def run_command(command, shell=False):
 
 def install_dependencies():
     print("Updating package list and installing curl, uuid-runtime...")
-    run_command(["apt-get", "update", "-y"])
-    run_command(["apt-get", "install", "curl", "uuid-runtime", "-y"])
+    run_command(["apt-get", "update"])
+    run_command(["apt-get", "install", "-y", "curl", "uuid-runtime"])
 
 def install_xray():
     print("Installing Xray-core...")
