@@ -23,9 +23,16 @@ def get_pkg_manager():
         return "yum"
     raise Exception("No supported package manager found")
 
+def wait_for_apt():
+    print("Stopping apt background services...")
+
+    run_command(["systemctl", "stop", "apt-daily.service"])
+    run_command(["systemctl", "stop", "apt-daily-upgrade.service"])
+
 def install_dependencies():
     pkg = get_pkg_manager()
     if pkg == "apt":
+        wait_for_apt()
         print("APT detected, updating package lists... (may wait if system is auto-updating)")
     
         run_command([
