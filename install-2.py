@@ -46,7 +46,7 @@ def install_dependencies():
             "uuid-runtime",
             "python3-pip"
         ])
-        run_command(["pip3", "install", "qrcode-terminal"])
+        run_command(["python3", "-m", "pip", "install", "qrcode-terminal"])
     elif pkg == "dnf":
         run_command(["dnf", "install", "-y", "curl", "util-linux"])
     elif pkg == "yum":
