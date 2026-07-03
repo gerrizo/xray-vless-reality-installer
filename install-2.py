@@ -122,23 +122,16 @@ def configure_xray():
 
     return uuid, public_key, short_id, dest
 
-# def enable_bbr():
-#     print("Enabling BBR (TCP congestion control)...")
+def enable_bbr():
+    print("Enabling BBR...")
 
-#     run_command(["modprobe", "tcp_bbr"])
+    with open("/etc/sysctl.d/99-bbr.conf", "w") as f:
+        f.write(
+            "net.core.default_qdisc=fq\n"
+            "net.ipv4.tcp_congestion_control=bbr\n"
+        )
 
-#     config = """
-# net.core.default_qdisc=fq
-# net.ipv4.tcp_congestion_control=bbr
-# """
-
-#     with open("/etc/sysctl.d/99-bbr.conf", "w") as f:
-#         f.write(config)
-
-#     run_command(["sysctl", "--system"])
-
-#     status = run_command(["sysctl", "net.ipv4.tcp_congestion_control"])
-#     print("BBR status:", status)
+    run_command(["sysctl", "-p", "/etc/sysctl.d/99-bbr.conf"])
 
 def open_firewall():
     if os.path.exists("/usr/sbin/ufw"):
@@ -160,7 +153,7 @@ def main():
     install_dependencies()
     install_xray()
     uuid, pbk, sid, dest = configure_xray()
-    #enable_bbr()
+    enable_bbr()
     open_firewall()
     start_xray()
 
