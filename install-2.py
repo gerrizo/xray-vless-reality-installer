@@ -126,12 +126,12 @@ def enable_bbr():
     print("Enabling BBR...")
 
     with open("/etc/sysctl.d/99-bbr.conf", "w") as f:
-        f.write(
-            "net.core.default_qdisc=fq\n"
-            "net.ipv4.tcp_congestion_control=bbr\n"
-        )
+        f.write("""
+net.core.default_qdisc=fq
+net.ipv4.tcp_congestion_control=bbr
+""")
 
-    run_command(["sysctl", "-p", "/etc/sysctl.d/99-bbr.conf"])
+    print("BBR config written (will apply automatically or after reboot)")
 
 def open_firewall():
     if os.path.exists("/usr/sbin/ufw"):
