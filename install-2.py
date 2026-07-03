@@ -3,7 +3,6 @@ import os
 import re
 import random
 import sys
-import qrcode_terminal
 
 def run_command(cmd):
     result = subprocess.run(cmd, text=True, capture_output=True)
@@ -43,10 +42,8 @@ def install_dependencies():
             "install",
             "-y",
             "curl",
-            "uuid-runtime",
-            "python3-pip"
+            "uuid-runtime"
         ])
-        run_command(["python3", "-m", "pip", "install", "qrcode-terminal"])
     elif pkg == "dnf":
         run_command(["dnf", "install", "-y", "curl", "util-linux"])
     elif pkg == "yum":
@@ -184,8 +181,6 @@ def main():
     print("-" * 40)
     print("VLESS LINK:")
     print(link)
-    print("\nQR CODE:\n")
-    qrcode_terminal.draw(link)
     print("=" * 40 + "\n")
 
 if __name__ == "__main__":
