@@ -138,7 +138,11 @@ net.core.default_qdisc=fq
 net.ipv4.tcp_congestion_control=bbr
 """)
 
-    print("BBR config written (will apply automatically or after reboot)")
+    # 🔥 立即生效（关键）
+    run_command(["sysctl", "-w", "net.core.default_qdisc=fq"])
+    run_command(["sysctl", "-w", "net.ipv4.tcp_congestion_control=bbr"])
+
+    print("BBR enabled successfully")
 
 def open_firewall():
     if os.path.exists("/usr/sbin/ufw"):
