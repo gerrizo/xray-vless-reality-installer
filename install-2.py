@@ -86,6 +86,7 @@ def configure_xray():
         "realitySettings": {{
           "show": false,
           "dest": "{dest}:443",
+          "xver": 0,
           "serverNames": ["{dest}"],
           "privateKey": "{private_key}",
           "shortIds": ["{short_id}"]
