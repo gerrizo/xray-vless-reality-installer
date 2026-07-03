@@ -48,75 +48,48 @@
 curl -O https://raw.githubusercontent.com/gerrizo/xray-vless-reality-installer/main/install.py && sudo python3 install.py
 ```
 ---
-# Xray VLESS Reality Installer
 
-A simple one-click Python installer for **Xray-core (VLESS + Reality)** with automatic configuration, random SNI selection, and QR code output for mobile clients.
+## 📱 输出示例
 
----
-
-## Disclaimer
-
-This project is intended for **educational and personal use only**.
-
-- Users are responsible for complying with local laws and regulations.
-- The author is not responsible for any misuse or damages.
-
----
-
-## 🚀 Features
-
-- One-click installation of Xray-core
-- Automatic VLESS + Reality configuration
-- Random SNI (stealth domain selection)
-- Auto-generated UUID and Reality keys
-- Short ID generation
-- Auto systemd service setup
-- Client share link generation (VLESS URI)
-
----
-
-## 📦 Requirements
-
-Supported systems:
-
-- Ubuntu 20.04 / 22.04 / 24.04
-- Debian 11+
-- CentOS
-
-Requirements:
-
-- Root or sudo privileges
-- Python 3.8+
-
----
-
-## ⚡ Installation
-
-### One-line Install
-```bash
-curl -O https://raw.githubusercontent.com/gerrizo/xray-vless-reality-installer/main/install.py && sudo python3 install.py
-```
----
-
-## 📱 Output Example
-
-After installation, you will get:
+安装完成后，你将获得：
 
 - UUID
-- Reality Public Key
+- Reality 公钥
 - Short ID
-- Selected Reality Domain (SNI)
-- VLESS share link
+- 选定的 Reality 域名（SNI）
+- VLESS 分享链接
 
-Example:
-
+示例：
 ```text
-vless://UUID@YOUR_IP:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.microsoft.com&fp=chrome&pbk=PUBLIC_KEY&sid=SHORT_ID#Xray_REALITY
+vless://UUID@YOUR_IP:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=www.microsoft.com&fp=chrome&pbk=PUBLIC_KEY&sid=SHORT_ID#Xray
 ```
+---
+## 工作原理
+
+该脚本主要执行以下步骤：
+
+- 使用官方安装脚本安装 Xray-core  
+- 自动生成：
+  - UUID（客户端 ID）
+  - X25519 Reality 密钥对
+  - Short ID  
+- 随机选择 TLS 伪装域名（SNI）  
+- 写入 Xray 配置文件：`/usr/local/etc/xray/config.json`  
+- 启用 systemd 服务  
+- 生成 VLESS 分享链接  
 
 ---
 
-## 🧠 How it works
+## 📄 许可证
+
+MIT License
+
+---
+
+## ⭐ 给项目点星
+
+如果你觉得这个项目有帮助，欢迎点一个 Star ⭐
+## How it works
 
 The script:
 
