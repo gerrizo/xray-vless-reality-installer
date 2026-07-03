@@ -61,7 +61,6 @@ def configure_xray():
         "www.microsoft.com",
         "www.cloudflare.com",
         "www.apple.com",
-        "www.office.com",
         "www.bing.com",
         "www.ibm.com",
         "www.tesla.com"
