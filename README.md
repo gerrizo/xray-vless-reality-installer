@@ -20,12 +20,17 @@
 - 随机 SNI（伪装域名选择）  
 - 自动生成 UUID 和 Reality 密钥  
 - 自动生成 Short ID  
-- 自动配置 systemd 服务  
+- 自动配置 systemd 服务
+- 自动开启 Google BBR 防拥堵算法
 - 自动生成客户端分享链接（VLESS URI）
 
 ---
 
-## 📦 系统要求
+## 使用前装备工作
+
+先获取一个可远程控制的VPS，推荐使用DigitalOcean、搬瓦工、Vultr
+
+### 📦 VPS系统要求
 
 支持系统：
 
@@ -68,6 +73,7 @@ vless://UUID@YOUR_IP:443?encryption=none&flow=xtls-rprx-vision&security=reality&
 
 该脚本主要执行以下步骤：
 
+- 更新软件包列表  
 - 使用官方安装脚本安装 Xray-core  
 - 自动生成：
   - UUID（客户端 ID）
@@ -75,12 +81,13 @@ vless://UUID@YOUR_IP:443?encryption=none&flow=xtls-rprx-vision&security=reality&
   - Short ID  
 - 随机选择 TLS 伪装域名（SNI）  
 - 写入 Xray 配置文件：`/usr/local/etc/xray/config.json`  
-- 启用 systemd 服务  
+- 启用 systemd 服务
+- 开启谷歌BBR防拥堵算法
 - 生成 VLESS 分享链接  
 
 ---
 
-## 📄 许可证
+## 📄 使用许可
 
 MIT License
 
@@ -89,29 +96,3 @@ MIT License
 ## ⭐ 给项目点星
 
 如果你觉得这个项目有帮助，欢迎点一个 Star ⭐
-## How it works
-
-The script:
-
-- Installs Xray-core using official install script  
-- Generates:
-  - UUID (client ID)
-  - X25519 Reality key pair
-  - Short ID  
-- Randomly selects a TLS camouflage domain (SNI)  
-- Writes Xray configuration to `/usr/local/etc/xray/config.json`  
-- Enables systemd service  
-- Generates VLESS share link
-
----
-
-## 📄 License
-
-MIT License
-
----
-
-## ⭐ Star this project
-
-If you find this useful, consider giving it a star ⭐
-
