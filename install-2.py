@@ -26,8 +26,24 @@ def get_pkg_manager():
 def install_dependencies():
     pkg = get_pkg_manager()
     if pkg == "apt":
-        run_command(["apt-get", "update"])
-        run_command(["apt-get", "install", "-y", "curl", "uuid-runtime"])
+    print("APT detected, updating package lists... (may wait if system is auto-updating)")
+
+    run_command([
+        "apt-get",
+        "-o",
+        "DPkg::Lock::Timeout=300",
+        "update"
+    ])
+
+    run_command([
+        "apt-get",
+        "-o",
+        "DPkg::Lock::Timeout=300",
+        "install",
+        "-y",
+        "curl",
+        "uuid-runtime"
+    ])
     elif pkg == "dnf":
         run_command(["dnf", "install", "-y", "curl", "util-linux"])
     elif pkg == "yum":
