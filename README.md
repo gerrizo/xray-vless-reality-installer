@@ -56,7 +56,6 @@ After installation, you will get:
 - Short ID
 - Selected Reality Domain (SNI)
 - VLESS share link
-- QR code image (vless_qr.png)
 
 Example:
 
@@ -78,7 +77,7 @@ The script:
 - Randomly selects a TLS camouflage domain (SNI)  
 - Writes Xray configuration to `/usr/local/etc/xray/config.json`  
 - Enables systemd service  
-- Generates VLESS share link + QR code  
+- Generates VLESS share link
 
 ---
 
