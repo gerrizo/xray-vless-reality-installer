@@ -31,6 +31,7 @@ Supported systems:
 
 - Ubuntu 20.04 / 22.04 / 24.04
 - Debian 11+
+- CentOS
 
 Requirements:
 
