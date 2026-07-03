@@ -138,7 +138,6 @@ net.core.default_qdisc=fq
 net.ipv4.tcp_congestion_control=bbr
 """)
 
-    # 🔥 立即生效（关键）
     run_command(["sysctl", "-w", "net.core.default_qdisc=fq"])
     run_command(["sysctl", "-w", "net.ipv4.tcp_congestion_control=bbr"])
 
