@@ -28,7 +28,7 @@
 
 ## 使用前装备工作
 
-先获取一个可远程控制的VPS，推荐使用DigitalOcean、搬瓦工、Vultr
+先获取一个可远程控制的VPS，推荐使用[DigitalOcean](https://thetowerinfo.com/go/digitalocean)、[搬瓦工](https://bwh81.net/aff.php?aff=68661)、[Vultr](https://www.vultr.com/?ref=9086219)。
 
 ### 📦 VPS系统要求
 
@@ -52,6 +52,9 @@
 ```bash
 curl -O https://raw.githubusercontent.com/gerrizo/xray-vless-reality-installer/main/install.py && sudo python3 install.py
 ```
+
+具体安装及使用步骤可参考[这篇教程](https://thetowerinfo.com/zh/v2ray-vless-reality-tutorial/)。
+
 ---
 
 ## 📱 输出示例
