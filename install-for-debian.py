@@ -105,6 +105,17 @@ def configure_xray():
 
     return uuid, public_key, short_id, reality_dest
 
+def fetch_ip(version):
+    if version not in ("4", "6"):
+        raise ValueError("version must be '4' or '6'")
+    return run_command(["curl", "-s" + version, "ifconfig.me"]).strip()
+
+def format_ip(ip):
+    # IPv6 addresses must be wrapped in [] inside a vless:// URI.
+    if ":" in ip:
+        return "[" + ip + "]"
+    return ip
+
 def start_xray():
     print("Starting Xray...")
     run_command(["systemctl", "enable", "xray"])
@@ -117,9 +128,13 @@ def main():
         sys.exit(1)
 
     try:
-        ip = run_command(["curl", "-s", "ifconfig.me"]).strip()
-    except:
-        ip = "YOUR_VPS_IP"
+        ipv4 = format_ip(fetch_ip("4"))
+    except Exception:
+        ipv4 = None
+    try:
+        ipv6 = format_ip(fetch_ip("6"))
+    except Exception:
+        ipv6 = None
 
     install_dependencies()
     install_xray()
@@ -128,7 +143,8 @@ def main():
 
     start_xray()
 
-    vless_link = f"vless://{uuid}@{ip}:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni={reality_dest}&fp=chrome&pbk={public_key}&sid={short_id}#Xray_REALITY"
+    def make_link(ip):
+        return f"vless://{uuid}@{ip}:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni={reality_dest}&fp=chrome&pbk={public_key}&sid={short_id}#Xray_REALITY"
 
     print("\n" + "=" * 50)
     print(" 🚀 Xray VLESS-REALITY Installation Complete!")
@@ -138,8 +154,14 @@ def main():
     print(f"Public Key:   {public_key}")
     print(f"Short ID:     {short_id}")
     print("-" * 50)
-    print(" Your Client Share Link (Copy and import to client):")
-    print(vless_link)
+    if ipv4:
+        print(" Your Client Share Link - IPv4 (Copy and import to client):")
+        print(make_link(ipv4))
+    if ipv6:
+        print(" Your Client Share Link - IPv6 (Copy and import to client):")
+        print(make_link(ipv6))
+    if not ipv4 and not ipv6:
+        print(" VLESS LINK: could not determine public IP")
     print("=" * 50 + "\n")
 
 if __name__ == "__main__":

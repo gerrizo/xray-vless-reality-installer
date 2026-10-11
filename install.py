@@ -154,11 +154,29 @@ def start_xray():
     run_command(["systemctl", "enable", "xray"])
     run_command(["systemctl", "restart", "xray"])
 
+def fetch_ip(version):
+    if version not in ("4", "6"):
+        raise ValueError("version must be '4' or '6'")
+    return run_command(["curl", "-s" + version, "ifconfig.me"]).strip()
+
+def format_ip(ip):
+    # IPv6 addresses must be wrapped in [] inside a vless:// URI.
+    if ":" in ip:
+        return "[" + ip + "]"
+    return ip
+
 def main():
     if os.geteuid() != 0:
         sys.exit(1)
 
-    ip = run_command(["curl", "-s", "ifconfig.me"])
+    try:
+        ipv4 = format_ip(fetch_ip("4"))
+    except Exception:
+        ipv4 = None
+    try:
+        ipv6 = format_ip(fetch_ip("6"))
+    except Exception:
+        ipv6 = None
 
     install_dependencies()
     install_xray()
@@ -167,12 +185,13 @@ def main():
     open_firewall()
     start_xray()
 
-    link = (
-        f"vless://{uuid}@{ip}:443"
-        f"?encryption=none&flow=xtls-rprx-vision"
-        f"&security=reality&sni={dest}"
-        f"&fp=chrome&pbk={pbk}&sid={sid}#Xray"
-    )
+    def make_link(ip):
+        return (
+            f"vless://{uuid}@{ip}:443"
+            f"?encryption=none&flow=xtls-rprx-vision"
+            f"&security=reality&sni={dest}"
+            f"&fp=chrome&pbk={pbk}&sid={sid}#Xray"
+        )
 
     print("\n" + "=" * 40)
     print("INSTALL COMPLETE")
@@ -182,8 +201,14 @@ def main():
     print(f"Public Key     : {pbk}")
     print(f"Short ID       : {sid}")
     print("-" * 40)
-    print("VLESS LINK:")
-    print(link)
+    if ipv4:
+        print("VLESS LINK (IPv4):")
+        print(make_link(ipv4))
+    if ipv6:
+        print("VLESS LINK (IPv6):")
+        print(make_link(ipv6))
+    if not ipv4 and not ipv6:
+        print("VLESS LINK: could not determine public IP")
     print("=" * 40 + "\n")
 
 if __name__ == "__main__":
